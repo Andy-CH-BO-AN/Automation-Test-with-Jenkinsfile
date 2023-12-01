@@ -33,13 +33,12 @@ jobs:
         pip install -r requirement.txt
 
     - name: set secret to .env
-      run: echo "${{secrets.secret}}" > .env
+      run: echo "${{secrets.SECRET}}" > .env
 
     - name: load
       run: cat .env
 
     - name: run test
       run: |
-        echo "My secret is ${{ secrets.MY_SECRET }}"
-
+        pytest ./test_api/test_api_login.py
     
