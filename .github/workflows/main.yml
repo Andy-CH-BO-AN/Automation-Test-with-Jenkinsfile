@@ -33,9 +33,9 @@ jobs:
         pip install -r requirement.txt
 
     - name: set secret to .env
-      run: echo "${{ secrets.SECRET }}" > .env
+      run: echo "${{ secrets.SECR }}" > .env
 
-    - name: load
+    - name: load secret
       run: cat .env
 
     - name: run test
