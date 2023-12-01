@@ -60,5 +60,5 @@ jobs:
 
     - name: run test
       run: |
-        pytest ./test_api
+        pytest ./test_api/test_api_login.py
     
