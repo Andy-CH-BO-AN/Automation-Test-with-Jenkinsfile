@@ -1,18 +1,57 @@
 name: Python Tests
 
-on: 
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+env:
+  API_DOMAIN: http://wwww.example.com/api    # The api link you'd like to test
+  DOMAIN: http://wwww.example.com            # The link you'd like to test
+  IMAGE_DOMAIN: http://wwww.example.com      # The domain of the link image stored
+  DB_HOST: 0.0.0.0                           # The Host of Database
+  DB_PORT: 0000                              # The Port of Database
+  DB_USERNAME: username                      # The username used to connect DB
+  DB_PASSWORD: password                      # The password used to connect DB
+  DB_DATABASE: Schema                        # The schema you'd like to connect
 
+  EMAIL: email                               # The email used to sign in website
+  PASSWORD: password                         # The password used to sign in website
+
+  EMAIL_WORKER1: email1                      # The another email used to sign in website
+  PASSWORD_WORKER1: password1                # The another password used to sign in website
+
+  EMAIL_WORKER2: email2                      # The other email used to sign in website
+  PASSWORD_WORKER2: email2                   # The other password used to sign in website
+
+  APP_KEY: app_key                           # The app key used to get prime
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        max-tries: [ 3 ]
+        python-version: [3.8]
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # - name:
-    #   uses: 
-    #   with:
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
 
-    # - name:
-    #   run: 
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Install Dependencies
+      run: |
+        pytest ./test_api
+    
