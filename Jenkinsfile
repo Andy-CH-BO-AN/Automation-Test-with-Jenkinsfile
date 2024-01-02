@@ -1,16 +1,31 @@
 pipeline {
     agent any
     triggers {
-        // 看要用定時 trigger 還是用 pr trigger
+        githubPush()
     }
 
+
     environment {
-        // set up your jenkins credentials
+         ENV = credentials('env')
     }
+
 
 
     stages {
-        // set up your stages
+        stage('Set up env') {
+            steps {
+                script {
+                    sh 'python3 -m pip install --upgrade pip'
+                    sh 'pip3 install -r requirements.txt'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    sh 'python3 -m pytest -s -v'
+                }
+            }
         }
     }
 }
