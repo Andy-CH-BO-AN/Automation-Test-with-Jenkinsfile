@@ -9,6 +9,7 @@ class APIBase():
         self.session = session
 
     def api_request(self, method, url, **kwargs):
+        logging.info(url)
         self.response = self.session.request(method, url, **kwargs)
 
     def get_status_code(self):
