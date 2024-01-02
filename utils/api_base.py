@@ -1,4 +1,6 @@
 import json
+import logging
+
 
 class APIBase():
 
@@ -13,6 +15,7 @@ class APIBase():
         return self.response.status_code
     
     def get_response_body(self):
+        logging.info(self.response.json())
         return self.response.json()
     
     def get_request_body(self):
