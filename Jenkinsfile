@@ -6,7 +6,7 @@ pipeline {
 
 
     environment {
-         ENV = credentials('env')
+         ENV_FILE = credentials('env')
     }
 
 
